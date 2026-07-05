@@ -17,7 +17,8 @@ ROBOFLOW_API_KEY = os.getenv("ROBOFLOW_API_KEY")
 WORKSPACE = "roboflow-universe-projects"
 PROJECT = "license-plate-recognition-rxg4e"
 VERSION = 11
-EPOCHS = 3
+EPOCHS = 50
+PATIENCE = 10  # Stop early if validation mAP hasn't improved for this many epochs
 IMAGE_SIZE = 640
 DATA_YAML_PATH = "License-Plate-Recognition-11/data.yaml"
 
@@ -41,7 +42,7 @@ def train_model():
     print("Training YOLO26 model...")
     # Start from the pretrained nano weights so the model converges with few epochs
     model = YOLO("yolo26n.pt")
-    results = model.train(data=DATA_YAML_PATH, epochs=EPOCHS, imgsz=IMAGE_SIZE)
+    results = model.train(data=DATA_YAML_PATH, epochs=EPOCHS, imgsz=IMAGE_SIZE, patience=PATIENCE)
 
     print("Evaluating model...")
     results = model.val()

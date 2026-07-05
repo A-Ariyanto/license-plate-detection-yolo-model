@@ -5,7 +5,7 @@ from ultralytics import YOLO
 def test_model(model):
     print("Testing YOLO26 model on a demo")
     
-    results = model("image1.jpg", save=True)
+    results = model("testfiles/image1.jpg", save=True)
     
     print("Results saved")
     

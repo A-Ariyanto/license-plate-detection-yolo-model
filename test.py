@@ -3,24 +3,16 @@ import cv2
 import easyocr
 from ultralytics import YOLO
 
-IMAGE_PATH = "testfiles/image1.jpg"
+TESTFILES_DIR = "testfiles"
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png")
 
 
-def test_model(model):
-    print("Testing YOLO26 model on a demo")
+def detect_and_read(model, reader, image_path):
+    print(f"\n--- Testing {image_path} ---")
 
-    results = model(IMAGE_PATH, save=True)
+    results = model(image_path, save=True)
 
-    print("Results saved")
-
-    return results
-
-
-def read_plates(results):
-    print("Reading plate text with EasyOCR")
-
-    reader = easyocr.Reader(["en"])
-    image = cv2.imread(IMAGE_PATH)
+    image = cv2.imread(image_path)
     annotated = image.copy()
 
     plates = []
@@ -44,7 +36,8 @@ def read_plates(results):
     if not plates:
         print("No readable plate text found")
 
-    output_path = os.path.join(str(results[0].save_dir), "image1_ocr.jpg")
+    stem = os.path.splitext(os.path.basename(image_path))[0]
+    output_path = os.path.join(str(results[0].save_dir), f"{stem}_ocr.jpg")
     cv2.imwrite(output_path, annotated)
     print(f"Annotated image with plate text saved to {output_path}")
 
@@ -53,9 +46,10 @@ def read_plates(results):
 
 if __name__ == "__main__":
     model = YOLO("runs/detect/train/weights/best.pt")
+    reader = easyocr.Reader(["en"])
 
-    result = test_model(model)
+    for filename in sorted(os.listdir(TESTFILES_DIR)):
+        if filename.lower().endswith(IMAGE_EXTENSIONS):
+            detect_and_read(model, reader, os.path.join(TESTFILES_DIR, filename))
 
-    read_plates(result)
-
-    print("Testing completed. Check the output in the 'runs/detect/predict' directory.")
+    print("\nTesting completed. Check the output in the 'runs/detect/predict' directory.")

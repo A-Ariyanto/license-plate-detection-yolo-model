@@ -19,7 +19,7 @@ This project is meant to be run on Google Colab with a **T4 GPU** — training i
    ```python
    !git clone https://github.com/A-Ariyanto/license-plate-detection-yolo-v11.git
    %cd license-plate-detection-yolo-v11
-   !pip install ultralytics roboflow python-dotenv
+   !pip install ultralytics roboflow python-dotenv easyocr
    ```
 
    ```python
@@ -40,7 +40,7 @@ This project is meant to be run on Google Colab with a **T4 GPU** — training i
 1. Install the dependencies:
 
    ```bash
-   pip3 install ultralytics roboflow python-dotenv
+   pip3 install ultralytics roboflow python-dotenv easyocr
    ```
 
 2. Create your `.env` file from the template and add your Roboflow API key (find it in your [Roboflow account settings](https://app.roboflow.com/settings/api)):

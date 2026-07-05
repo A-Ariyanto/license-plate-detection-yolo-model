@@ -9,5 +9,8 @@ yolo*
 # ignore any . files
 .DS_Store
 
+# secrets - never commit the .env file (keep .env.example as the template)
+.env
+
 # in the testfile folder, ignore any file (especially .mp4 files cause they are to big) that starts with demo
 testfile/demo*

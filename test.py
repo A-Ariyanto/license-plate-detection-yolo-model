@@ -3,7 +3,7 @@ from ultralytics import YOLO
 
 
 def test_model(model):
-    print("Testing YOLOv11 model on a demo")
+    print("Testing YOLO26 model on a demo")
     
     results = model("image1.jpg", save=True)
     
